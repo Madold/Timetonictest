@@ -1,0 +1,7 @@
+package com.markusw.timetonictest.auth.presentation
+
+data class LoginState(
+    val email: String = "",
+    val password: String = "",
+    val isLoading: Boolean = false,
+)

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Timetonictest</string>
+    <string name="eye_description">Eye toggle</string>
 </resources>

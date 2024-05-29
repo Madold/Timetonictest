@@ -7,12 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.markusw.timetonictest.auth.presentation.LoginScreen
+import com.markusw.timetonictest.auth.presentation.LoginViewModel
 import com.markusw.timetonictest.core.presentation.Screens
 import com.markusw.timetonictest.landing.presentation.LandingScreen
 import com.markusw.timetonictest.ui.theme.TimetonictestTheme
@@ -30,8 +34,13 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(navController = navController, startDestination = Screens.Login.route) {
                         composable(Screens.Login.route) {
+
+                            val viewModel = hiltViewModel<LoginViewModel>()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
                             LoginScreen(
-                                onEvent = {},
+                                state = uiState,
+                                onEvent = viewModel::onEvent,
                                 mainNavController = navController
                             )
                         }
