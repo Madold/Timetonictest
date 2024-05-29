@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,6 +53,10 @@ dependencies {
     //Retrofit
     implementation(libs.com.squareup.retrofit2)
     implementation(libs.gson.converter)
+
+    //Dagger hilt
+    implementation(libs.com.google.dagger)
+    ksp(libs.com.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
