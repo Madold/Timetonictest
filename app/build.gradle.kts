@@ -63,6 +63,9 @@ dependencies {
     //Navigation compose
     implementation(libs.androidx.navigation.compose)
 
+    //Hilt navigation
+    implementation(libs.androidx.hilt.navigation)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
