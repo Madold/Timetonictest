@@ -17,6 +17,7 @@
 ## Tech stack: Kotlin, Jetpack Compose, Dagger Hilt, Jetpack Libraries, Retrofit, Coil Compose, Android Jetpack Navigation and KSP
 
 # Demo
+![App demo](https://github.com/Madold/Timetonictest/blob/main/2024-05-30%2000-57-41.gif?raw=true)
 
 Used version catalogs for dependency managment.
 
