@@ -53,11 +53,8 @@ class MainActivity : ComponentActivity() {
                                             ).show()
                                         }
                                         is LoginViewModelEvent.LoginSuccess -> {
-                                            navController.navigate(Screens.Landing.route) {
-                                                popUpTo(Screens.Landing.route) {
-                                                    saveState = true
-                                                }
-                                            }
+                                            navController.popBackStack()
+                                            navController.navigate(Screens.Landing.route)
                                         }
                                     }
                                 }

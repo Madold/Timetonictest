@@ -3,6 +3,8 @@ package com.markusw.timetonictest.auth.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.markusw.timetonictest.auth.domain.AuthRepository
+import com.markusw.timetonictest.auth.domain.use_cases.ValidateEmail
+import com.markusw.timetonictest.auth.domain.use_cases.ValidatePassword
 import com.markusw.timetonictest.core.presentation.UiText
 import com.markusw.timetonictest.core.utils.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val validateEmail: ValidateEmail,
+    private val validatePassword: ValidatePassword
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginState())
@@ -34,12 +38,33 @@ class LoginViewModel @Inject constructor(
                 _uiState.update { it.copy(password = event.password) }
             }
             AuthEvent.Login -> {
-                _uiState.update { it.copy(isLoading = true) }
+                val email = uiState.value.email
+                val password = uiState.value.password
+                val emailResult = validateEmail(email)
+                val passwordResult = validatePassword(password)
+                val isAnyError = listOf(
+                    emailResult,
+                    passwordResult
+                ).any { !it.successful }
+
+                if (isAnyError) {
+                    _uiState.update {
+                        it.copy(
+                            emailError = emailResult.errorMessage,
+                            passwordError = passwordResult.errorMessage
+                        )
+                    }
+                    return
+                }
+
+
+                _uiState.update { it.copy(
+                    isLoading = true,
+                    emailError = null,
+                    passwordError = null
+                ) }
 
                 viewModelScope.launch {
-                    // Login network request...
-                    val email = uiState.value.email
-                    val password = uiState.value.password
                     when (val result = authRepository.login(email, password)) {
                         is Result.Error -> {
                             channel.send(LoginViewModelEvent.LoginError(result.message ?: UiText.DynamicString("Unknown error")))
@@ -48,12 +73,14 @@ class LoginViewModel @Inject constructor(
                             channel.send(LoginViewModelEvent.LoginSuccess)
                         }
                     }
+
+                    _uiState.update {
+                        it.copy(isLoading = false)
+                    }
                 }
 
             }
         }
-
     }
-
 
 }

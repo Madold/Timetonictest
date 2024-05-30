@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Timetonictest</string>
     <string name="eye_description">Eye toggle</string>
+    <string name="blank_email_error">Email can\'t be blank</string>
+    <string name="invalid_email_error">Invalid email</string>
+    <string name="blank_password_error">Password can\'t be blank</string>
 </resources>

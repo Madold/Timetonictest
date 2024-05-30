@@ -4,7 +4,6 @@ import com.markusw.timetonictest.network.data.remote.responses.AppKeyResponse
 import com.markusw.timetonictest.network.data.remote.responses.BookResponse
 import com.markusw.timetonictest.network.data.remote.responses.OauthKeyResponse
 import com.markusw.timetonictest.network.data.remote.responses.SessionKeyResponse
-import javax.inject.Inject
 
 class TimeTonicService(
     private val timeTonicApi: TimeTonicApi
