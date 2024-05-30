@@ -16,6 +16,8 @@
 
 ## Tech stack: Kotlin, Jetpack Compose, Dagger Hilt, Jetpack Libraries, Retrofit, Coil Compose, Android Jetpack Navigation and KSP
 
+# Demo
+
 Used version catalogs for dependency managment.
 
 
