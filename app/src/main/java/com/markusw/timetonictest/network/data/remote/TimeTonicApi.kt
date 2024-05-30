@@ -2,6 +2,7 @@ package com.markusw.timetonictest.network.data.remote
 
 import com.markusw.timetonictest.network.data.remote.responses.AppKeyResponse
 import com.markusw.timetonictest.network.data.remote.responses.BookResponse
+import com.markusw.timetonictest.network.data.remote.responses.BooksResponse
 import com.markusw.timetonictest.network.data.remote.responses.OauthKeyResponse
 import com.markusw.timetonictest.network.data.remote.responses.SessionKeyResponse
 import okhttp3.ResponseBody
@@ -40,9 +41,9 @@ interface TimeTonicApi {
     suspend fun getAllBooks(
         @Query("o_u") o_u: String,
         @Query("u_c") u_c: String,
-        @Query("sesskey ") sessionKey: String,
+        @Query("sesskey") sessionKey: String,
         @Query("version") version: String = "6.49q/6.49",
         @Query("req") req: String = "getAllBooks",
-    ): Response<BookResponse>
+    ): Response<BooksResponse>
 
 }

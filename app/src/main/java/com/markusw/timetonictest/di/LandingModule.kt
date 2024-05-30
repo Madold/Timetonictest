@@ -1,5 +1,6 @@
 package com.markusw.timetonictest.di
 
+import com.markusw.timetonictest.core.domain.local.LocalDataStore
 import com.markusw.timetonictest.landing.data.repository.AndroidBooksRepository
 import com.markusw.timetonictest.landing.domain.repository.BooksRepository
 import com.markusw.timetonictest.network.data.remote.TimeTonicApi
@@ -17,9 +18,13 @@ object LandingModule {
     @Provides
     @Singleton
     fun provideBooksRepository(
-        timeTonicApi: TimeTonicApi
+        timeTonicApi: TimeTonicApi,
+        localDataStore: LocalDataStore
     ): BooksRepository {
-        return AndroidBooksRepository(TimeTonicService(timeTonicApi))
+        return AndroidBooksRepository(
+            TimeTonicService(timeTonicApi),
+            localDataStore
+        )
     }
 
 }

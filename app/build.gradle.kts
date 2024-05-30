@@ -69,6 +69,9 @@ dependencies {
     //Lifecycle runtime compose
     implementation(libs.androidx.lifecycle.runtime.compose)
 
+    //Coil compose
+    implementation(libs.io.coil.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

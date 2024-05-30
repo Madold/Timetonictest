@@ -4,4 +4,6 @@
     <string name="blank_email_error">Email can\'t be blank</string>
     <string name="invalid_email_error">Invalid email</string>
     <string name="blank_password_error">Password can\'t be blank</string>
+    <string name="book_cover_description">Book cover</string>
+    <string name="ic_exit_description">Exit icon</string>
 </resources>

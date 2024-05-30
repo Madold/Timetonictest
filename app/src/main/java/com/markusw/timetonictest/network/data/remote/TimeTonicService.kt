@@ -1,7 +1,7 @@
 package com.markusw.timetonictest.network.data.remote
 
 import com.markusw.timetonictest.network.data.remote.responses.AppKeyResponse
-import com.markusw.timetonictest.network.data.remote.responses.BookResponse
+import com.markusw.timetonictest.network.data.remote.responses.BooksResponse
 import com.markusw.timetonictest.network.data.remote.responses.OauthKeyResponse
 import com.markusw.timetonictest.network.data.remote.responses.SessionKeyResponse
 
@@ -49,7 +49,7 @@ class TimeTonicService(
         return response.body() ?: throw Exception("Error: body is null")
     }
 
-    suspend fun getAllBooks(o_u: String, u_c: String, sessionKey: String): BookResponse {
+    suspend fun getAllBooks(o_u: String, u_c: String, sessionKey: String): BooksResponse {
 
         val response = timeTonicApi.getAllBooks(o_u, u_c, sessionKey)
 
@@ -57,6 +57,8 @@ class TimeTonicService(
             println("get all books failed")
             throw Exception("Error: ${response.code()}")
         }
+
+        println("get all books success")
 
         return response.body() ?: throw Exception("Error: body is null")
     }

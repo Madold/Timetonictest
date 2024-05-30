@@ -18,5 +18,12 @@ class AndroidLocalDataStore(context: Context): LocalDataStore {
         return sharedPreferences.getString(key, defaultValue) ?: defaultValue
     }
 
+    override fun remove(key: String) {
+        return sharedPreferences
+            .edit()
+            .remove(key)
+            .apply()
+    }
+
 
 }

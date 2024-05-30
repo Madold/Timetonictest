@@ -33,5 +33,16 @@ class AndroidAuthRepository(
         }
     }
 
+    override suspend fun logout(): Result<Unit> {
+        return try {
+            localDataStore.remove(SESSION_KEY)
+            localDataStore.remove(O_U)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.Error(UiText.DynamicString("${e.message}"))
+        }
+    }
+
 
 }
