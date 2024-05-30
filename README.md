@@ -9,6 +9,9 @@
 ## Repository pattern
 ![Repository pattern](https://raw.githubusercontent.com/Madold/Timetonictest/main/repository_pattern.png)
 
+## Dependency Injection 
+![](https://github.com/Madold/Timetonictest/blob/main/dependency_injection.png?raw=true)
+
 ## Principles applied: SOLID
 
 ## Tech stack: Kotlin, Jetpack Compose, Dagger Hilt, Jetpack Libraries, Retrofit, Coil Compose, Android Jetpack Navigation and KSP
