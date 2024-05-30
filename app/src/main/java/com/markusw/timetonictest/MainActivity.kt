@@ -22,6 +22,7 @@ import com.markusw.timetonictest.auth.presentation.LoginViewModel
 import com.markusw.timetonictest.auth.presentation.LoginViewModelEvent
 import com.markusw.timetonictest.core.presentation.Screens
 import com.markusw.timetonictest.landing.presentation.LandingScreen
+import com.markusw.timetonictest.landing.presentation.LandingViewModel
 import com.markusw.timetonictest.ui.theme.TimetonictestTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -68,8 +69,12 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Screens.Landing.route) {
+                            val viewModel = hiltViewModel<LandingViewModel>()
+                            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
                             LandingScreen(
-                                onEvent = {},
+                                state = uiState,
+                                onEvent = viewModel::onEvent,
                                 mainNavController = navController
                             )
                         }
