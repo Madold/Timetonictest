@@ -1,12 +1,16 @@
 package com.markusw.timetonictest.auth.data.repository
 
 import com.markusw.timetonictest.auth.domain.AuthRepository
+import com.markusw.timetonictest.core.domain.local.LocalDataStore
 import com.markusw.timetonictest.core.presentation.UiText
+import com.markusw.timetonictest.core.utils.Constants.O_U
+import com.markusw.timetonictest.core.utils.Constants.SESSION_KEY
 import com.markusw.timetonictest.core.utils.Result
 import com.markusw.timetonictest.network.data.remote.TimeTonicService
 
 class AndroidAuthRepository(
-    private val timeTonicService: TimeTonicService
+    private val timeTonicService: TimeTonicService,
+    private val localDataStore: LocalDataStore
 ) : AuthRepository {
 
     override suspend fun login(email: String, password: String): Result<Unit> {
@@ -18,6 +22,9 @@ class AndroidAuthRepository(
                 u_c = oAuthKeyResponse.o_u,
                 oauthKey = oAuthKeyResponse.oauthkey
             ).sessionKey
+
+            localDataStore.saveData(data = sessionKey, key = SESSION_KEY)
+            localDataStore.saveData(data = oAuthKeyResponse.o_u, key = O_U)
 
             Result.Success(Unit)
         } catch (e: Exception) {
