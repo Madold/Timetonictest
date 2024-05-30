@@ -15,7 +15,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+/**
+ * ViewModel for the Landing screen
+ * @param getAllBooks use case to get all books
+ * @param authRepository repository to handle authentication
+ */
 @HiltViewModel
 class LandingViewModel @Inject constructor(
     private val getAllBooks: GetAllBooks,
@@ -60,6 +64,11 @@ class LandingViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        channel.close()
     }
 
 }

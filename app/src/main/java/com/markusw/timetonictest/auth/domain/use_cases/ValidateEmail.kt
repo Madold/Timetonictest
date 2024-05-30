@@ -4,6 +4,13 @@ import com.markusw.timetonictest.R
 import com.markusw.timetonictest.core.presentation.UiText
 import javax.inject.Inject
 
+/**
+ * Use case to validate an email address.
+ *
+ * @param email The email address to validate.
+ * @return A [ValidationResult] object indicating whether the email address is valid or not.
+ * @see ValidationResult
+ */
 class ValidateEmail @Inject constructor() {
 
     companion object {

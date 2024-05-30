@@ -3,6 +3,12 @@ package com.markusw.timetonictest.core.data.local
 import android.content.Context
 import com.markusw.timetonictest.core.domain.local.LocalDataStore
 
+/**
+ * Android implementation of the LocalDataStore interface
+ * Uses SharedPreferences to store data locally
+ * @param context the context of the application
+ * @see LocalDataStore
+ */
 class AndroidLocalDataStore(context: Context): LocalDataStore {
 
     private val sharedPreferences = context

@@ -8,6 +8,13 @@ import com.markusw.timetonictest.core.utils.Constants.SESSION_KEY
 import com.markusw.timetonictest.core.utils.Result
 import com.markusw.timetonictest.network.data.remote.TimeTonicService
 
+/**
+ * Android implementation of the AuthRepository.
+ * This class is responsible for handling the authentication logic.
+ * It uses the TimeTonicService to make the network requests and the LocalDataStore to save the session key.
+ * @param timeTonicService the TimeTonicService to make the network requests
+ * @param localDataStore the LocalDataStore to save the session key
+ */
 class AndroidAuthRepository(
     private val timeTonicService: TimeTonicService,
     private val localDataStore: LocalDataStore

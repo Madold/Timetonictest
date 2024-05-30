@@ -16,6 +16,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for the login screen.
+ * @param authRepository Repository for authentication.
+ * @param validateEmail Use case for validating email.
+ * @param validatePassword Use case for validating password.
+ */
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
@@ -28,6 +34,10 @@ class LoginViewModel @Inject constructor(
     private val channel = Channel<LoginViewModelEvent>()
     val events = channel.receiveAsFlow()
 
+    /**
+     * Function to handle events from the UI.
+     * @param event Event from the UI.
+     */
     fun onEvent(event: AuthEvent) {
 
         when (event) {
@@ -81,6 +91,14 @@ class LoginViewModel @Inject constructor(
 
             }
         }
+    }
+
+    /**
+     * Function to clear the channel when the ViewModel is cleared.
+     */
+    override fun onCleared() {
+        super.onCleared()
+        channel.close()
     }
 
 }

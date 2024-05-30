@@ -9,6 +9,11 @@ import com.markusw.timetonictest.network.data.remote.TimeTonicService
 import com.markusw.timetonictest.network.data.remote.responses.BookResponse
 import com.markusw.timetonictest.network.data.remote.responses.BooksResponse
 
+/**
+ * Android implementation of the BooksRepository.
+ * @property timeTonicService The TimeTonicService instance
+ * @property localDataStore The LocalDataStore instance
+ */
 class AndroidBooksRepository (
     private val timeTonicService: TimeTonicService,
     private val localDataStore: LocalDataStore
