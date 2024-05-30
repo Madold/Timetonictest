@@ -63,4 +63,14 @@ class TimeTonicService(
         return response.body() ?: throw Exception("Error: body is null")
     }
 
+    suspend fun dropAllSessions(o_u: String, u_c: String, sessionKey: String) {
+        val response = timeTonicApi.dropAllSessions(o_u, u_c, sessionKey)
+
+        println("close session success")
+
+        if (!response.isSuccessful) {
+            throw Exception("Error: ${response.code()}")
+        }
+    }
+
 }

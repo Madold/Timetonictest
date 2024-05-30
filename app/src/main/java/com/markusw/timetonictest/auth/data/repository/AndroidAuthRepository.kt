@@ -35,6 +35,9 @@ class AndroidAuthRepository(
 
     override suspend fun logout(): Result<Unit> {
         return try {
+            val sessionKey = localDataStore.getData(SESSION_KEY, defaultValue = "none")
+            val o_u = localDataStore.getData(O_U, defaultValue = "none")
+            timeTonicService.dropAllSessions(o_u, o_u, sessionKey)
             localDataStore.remove(SESSION_KEY)
             localDataStore.remove(O_U)
             Result.Success(Unit)

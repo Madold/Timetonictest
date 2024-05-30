@@ -20,24 +20,36 @@ import androidx.navigation.compose.rememberNavController
 import com.markusw.timetonictest.auth.presentation.LoginScreen
 import com.markusw.timetonictest.auth.presentation.LoginViewModel
 import com.markusw.timetonictest.auth.presentation.LoginViewModelEvent
+import com.markusw.timetonictest.core.domain.local.LocalDataStore
 import com.markusw.timetonictest.core.presentation.Screens
+import com.markusw.timetonictest.core.utils.Constants
 import com.markusw.timetonictest.landing.presentation.LandingScreen
 import com.markusw.timetonictest.landing.presentation.LandingViewModel
+import com.markusw.timetonictest.landing.presentation.LandingViewModelEvent
 import com.markusw.timetonictest.ui.theme.TimetonictestTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var localDataStore: LocalDataStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val isUserLoggedIn = localDataStore.getData(Constants.SESSION_KEY, defaultValue = "none") != "none"
+                && localDataStore.getData(Constants.O_U, defaultValue = "none") != "none"
+
         setContent {
             TimetonictestTheme {
                 Surface {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = Screens.Login.route) {
+                    NavHost(navController = navController, startDestination = if (isUserLoggedIn) Screens.Landing.route else Screens.Login.route) {
                         composable(Screens.Login.route) {
 
                             val viewModel = hiltViewModel<LoginViewModel>()
@@ -71,6 +83,24 @@ class MainActivity : ComponentActivity() {
                         composable(Screens.Landing.route) {
                             val viewModel = hiltViewModel<LandingViewModel>()
                             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                            LaunchedEffect(key1 = Unit) {
+                                viewModel.events.collectLatest { event ->
+                                    when (event) {
+                                        is LandingViewModelEvent.CloseSessionError -> {
+                                            Toast.makeText(
+                                                this@MainActivity,
+                                                event.message.asString(this@MainActivity),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        is LandingViewModelEvent.CloseSessionSuccess -> {
+                                            navController.popBackStack()
+                                            navController.navigate(Screens.Login.route)
+                                        }
+                                    }
+                                }
+                            }
 
                             LandingScreen(
                                 state = uiState,
