@@ -8,26 +8,20 @@ import com.markusw.timetonictest.network.data.remote.TimeTonicService
 class AndroidAuthRepository(
     private val timeTonicService: TimeTonicService
 ) : AuthRepository {
-    override suspend fun getAppKey(): Result<String> {
-        return try {
-            Result.Success(timeTonicService.getAppKey().appKey)
-        } catch (e: Exception) {
-            Result.Error(UiText.DynamicString("${e.message}"))
-        }
-    }
 
-    override suspend fun getOauthKey(appKey: String, login: String, pwd: String): Result<String> {
+    override suspend fun login(email: String, password: String): Result<Unit> {
         return try {
-            Result.Success(timeTonicService.getOauthKey(appKey, login, pwd).oauthKey)
-        } catch (e: Exception) {
-            Result.Error(UiText.DynamicString("${e.message}"))
-        }
-    }
+            val appKey = timeTonicService.getAppKey().appkey
+            val oAuthKeyResponse = timeTonicService.getOauthKey(appKey, email, password)
+            val sessionKey = timeTonicService.getSessionKey(
+                o_u = oAuthKeyResponse.o_u,
+                u_c = oAuthKeyResponse.o_u,
+                oauthKey = oAuthKeyResponse.oauthkey
+            ).sessionKey
 
-    override suspend fun getSessionKey(o_u: String, u_c: String, oauthKey: String): Result<String> {
-        return try {
-            Result.Success(timeTonicService.getSessionKey(o_u, u_c, oauthKey).sessionKey)
+            Result.Success(Unit)
         } catch (e: Exception) {
+            e.printStackTrace()
             Result.Error(UiText.DynamicString("${e.message}"))
         }
     }

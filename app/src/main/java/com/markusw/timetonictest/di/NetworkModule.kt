@@ -1,5 +1,6 @@
 package com.markusw.timetonictest.di
 
+import com.google.gson.GsonBuilder
 import com.markusw.timetonictest.network.data.remote.TimeTonicApi
 import dagger.Module
 import dagger.Provides
@@ -18,9 +19,14 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofitInstance(): Retrofit {
+
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         return Retrofit.Builder()
             .baseUrl(TIMETONIC_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
